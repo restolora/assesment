@@ -41,10 +41,12 @@
 	width: 100px;
 	background: #8b75f1 !important;
 	border: none !important;
+	color: #fff !important;
 }
 .btn:hover {
 	width: 100px;
 	border-radius: 25px !important;
 	background: #8b75f1 !important;
 	border: none !important;
+	color: #fff !important;
 }

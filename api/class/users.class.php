@@ -6,18 +6,18 @@ class Users extends dbconnect {
 	
 	protected function getAllData(){
 		$sql = "SELECT * FROM {$this->tblname}";				
-		$query = $this->select( $sql, null, "Error in getting cart.");
+		$query = $this->select( $sql, null );
 		if($query){
 			if($this->rowCount > 0 ){
 				return $query;
 			}else{
-				return 0;
+				return '{}';
 			}
 		}
 	}
 
-	protected function add($values, $error_msg){
-		$this->insert($this->tblname, $values, $error_msg);
+	protected function add($values){
+		return $this->insert($this->tblname, $values);
 	}
 
 	protected function deleteData($values){
@@ -79,11 +79,11 @@ class Users extends dbconnect {
 		if($query){
 			if($this->rowCount > 0 ){
 				return $query;
-			}else{
-				return 0;
 			}
+			return '{}';
+			
 		}	
-	} // getproductswithcategory end 
+	} 
 
 	public function selectBy($table, $values, $data){
 	    $sql = "SELECT * FROM ". $table;
@@ -93,14 +93,11 @@ class Users extends dbconnect {
 	    // echo $sql;
 	    $vals = array($data);
 	    foreach ($vals as $val) {
-		    $query = $this->select( $sql, $val, "Error in getting units.");
+		    $query = $this->select( $sql, $val);
 		}		
 	    if($query){
-			if($this->rowCount > 0 ){
-				return $query;
-			}else{
-				return 0;
-			}
+			if($this->rowCount > 0 ) return $query;
+			return '{}';
 		}		    
 	}
 

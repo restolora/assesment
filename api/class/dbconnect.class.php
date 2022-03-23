@@ -7,7 +7,7 @@
 		private $SERVER = "localhost";
 		private $DBUSER = "root";
 		private $DBPWRD = "";
-		private $DBNAME = "ecomdb";
+		private $DBNAME = "api";
 		private $DBTYPE = "mysql";
 		private $myDNS = null;
 		public $conn = null;
@@ -22,7 +22,7 @@
 			try {
 				$dsn = $this->DBTYPE.":host=".$this->SERVER.";dbname=".$this->DBNAME;
 				$this->conn = new PDO($dsn,$this->DBUSER,$this->DBPWRD);
-				$conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+				$this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 				$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				return $this->conn;
 			} catch (PDOException $e) {
@@ -32,7 +32,7 @@
 		// protected function setDNS(){
 		// 	$this->myDNS = $this->DBTYPE.":host=".$this->SERVER.";dbname=".$this->DBNAME;
 		// }
-		public function insert($table, $values, $error_msg){
+		public function insert($table, $values){
 			try {
 				$vals = array($values);
 				$fieldnames = array_keys($vals[0]);
@@ -43,22 +43,23 @@
 				$sql .= $fields . " VALUES " . $bound;
 				$this->query = $this->conn->prepare($sql);
 				foreach ($vals as $val) {
-					$this->execQuery( $val, $error_msg );
+					$this->execQuery( $val );
 				}
 
 			} catch (Exception $e) {
 				print("Error: ". $e->getMessage());
 			}
 		}
-		public function select( $prepared_sql, $values, $error_msg = "Error executing select query."){
+		public function select( $prepared_sql, $values){
 			$this->query = $this->conn->prepare( $prepared_sql );
-			$this->execQuery( $values, $error_msg );
+			$this->execQuery( $values);
+			
 			$this->rowCount = $this->query->rowCount();
-			return $this->query;
+			return $this->query->fetchAll();
 		}
-
-		public function execQuery( $values , $error_msg ){
-			$this->query->execute( $values ) or die ($error_msg);
+		
+		public function execQuery( $values){
+			$values ? $this->query->execute( $values ) : $this->query->execute();
 		}
 
 		public function delete($table, $values){
@@ -130,6 +131,7 @@
 		    }
 		}
 
-
 	}// class end
+
+
  ?>

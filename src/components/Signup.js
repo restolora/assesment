@@ -1,11 +1,14 @@
-import React from 'react';
+import React,{ useState, useEffect } from 'react';
 import Wrapper from './wrapper';
 import styles from '../styles/signup.module.css';
-import { Form, Input, Button, Row, Col } from 'antd';
+import { Form, Input, Button, Row, Col, message } from 'antd';
+import { useNavigate  } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import api from '../api';
 
-const Signup = () => {
+const Signup = ({ setSuccess }) => {
+	const navigate = useNavigate();
 	const validationSchema = yup.object({
 		Name: yup.string().required('Name is a required field'),
 		Email: yup.string().email('Invalid Email Address').required('Email is a required field'),
@@ -24,8 +27,18 @@ const Signup = () => {
 		Email: '',
 		Password: ''
 	};
-	const onSubmit = values => {
-		alert(JSON.stringify(values, null, 2));
+	const onSubmit = async dt => {		
+		try {
+			const { data: response } = await api.post('users.php', dt);
+			if(response.data == 'exist') return message.error(response.message);
+			setSuccess(true);
+			navigate('/success');				
+			message.success(response.message);				
+	
+		} catch (error) {
+			message.error(error.message);
+		}
+		
 	};
 	const formik = useFormik({ initialValues, validationSchema, onSubmit });
 
@@ -81,7 +94,7 @@ const Signup = () => {
 										''
 									)
 								}>
-								<Input
+								<Input.Password
 									id="Password"
 									name="Password"
 									onChange={formik.handleChange}

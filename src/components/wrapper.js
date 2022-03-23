@@ -7,7 +7,7 @@ function wrapper({ children }) {
 	return (
 		<>
 			<Layout>
-				<Header style={{ position: 'fixed', zIndex: 1, width: '100%', padding: '0', background: '#fff' }}>
+				<Header style={{ position: 'fixed', zIndex: 1, width: '100%', padding: '0 50px', background: '#fff' }}>
 					<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 						<div style={{ width: '10vw' }}>
 							<img src={'/Logo.JPG'} style={{ width: '100px', objectFit: 'contain' }} />
