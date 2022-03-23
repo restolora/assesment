@@ -1,0 +1,29 @@
+.form {
+	text-align: center;
+	margin: 70px auto;
+}
+
+.form > h1 {
+	font-size: 32px !important;
+}
+
+.form > p {
+	font-size: 12px !important;
+	color: #656565;
+}
+
+.input {
+	border-radius: 25px !important;
+}
+.btn {
+	border-radius: 25px !important;
+	width: 100%;
+	background: #8b75f1;
+	border: none;
+}
+.btn:hover {
+	width: 100%;
+	border-radius: 25px !important;
+	background: #8b75f1;
+	border: none;
+}
